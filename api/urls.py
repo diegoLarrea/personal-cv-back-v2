@@ -1,24 +1,34 @@
 from django.urls import include, path
 from rest_framework import routers
-from api.views.configViews.areaView import AreaList, AreaDetail
-from api.views.configViews.dominioView import DominioList, DominioDetail
-from api.views.configViews.nivelView import NivelList, NivelDetail
-from api.views.configViews.localidadView import LocalidadList, LocalidadDetail
-from api.views.ofertaLaboralView.ofertaLaboralView import OfertaList, OfertaDetail
+from api.views.auth.register import register
+from rest_framework_simplejwt import views as jwt_views
+from api.views.ajustes.areas import areaList, areaDetail
+from api.views.ajustes.dominios import dominioList, dominioDetail
+from api.views.ajustes.niveles import nivelList, nivelDetail
+from api.views.ajustes.localidades import localidadList, localidadDetail
+from api.views.ofertaLaboral.ofertaLaboral import ofertaList, ofertaDetail
+
 
 urlpatterns = [
-    path('area', AreaList.as_view()),
-    path('area/<int:pk>', AreaDetail.as_view()),
+    # URL para registro de usuarios
+    path('registrarse', register),
 
-    path('dominio', DominioList.as_view()),
-    path('dominio/<int:pk>', DominioDetail.as_view()),
+    # URL para login
+    path('login', jwt_views.TokenObtainPairView.as_view(),name='login'),
+        # path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(),name='token_refresh'),
 
-    path('nivel', NivelList.as_view()),
-    path('nivel/<int:pk>', NivelDetail.as_view()),
+    # URL para ajustes 
+    path('area', areaList.as_view()),
+    path('area/<int:pk>', areaDetail.as_view()),
+    path('dominio', dominioList.as_view()),
+    path('dominio/<int:pk>', dominioDetail.as_view()),
+    path('nivel', nivelList.as_view()),
+    path('nivel/<int:pk>', nivelDetail.as_view()),
+    path('localidad', localidadList.as_view()),
+    path('localidad/<int:pk>', localidadDetail.as_view()),
 
-    path('localidad', LocalidadList.as_view()),
-    path('localidad/<int:pk>', LocalidadDetail.as_view()),
+    # URL para ofertas
+    path('oferta', ofertaList.as_view()),
+    path('oferta/<int:pk>', ofertaDetail.as_view()),
 
-    path('oferta', OfertaList.as_view()),
-    path('oferta/<int:pk>', OfertaDetail.as_view()),
 ]

@@ -1,17 +1,20 @@
 from api.models import OfertaLaboral, Nivel, Dominio, Localidad, Area
-from api.serializers.ofertaLaboralSerializer.ofertaLaboralSerializer import OfertaLaboralSerializer 
-from api.serializers.configSerializer.configSerializer import NivelSerializer, LocalidadSerializer, DominioSerializer, AreaSerializer
+from api.serializers.ofertaLaboral.ofertaLaboralSerializer import OfertaLaboralSerializer 
+from api.serializers.ajustes.ajustes import NivelSerializer, LocalidadSerializer, DominioSerializer, AreaSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
+from rest_framework.permissions import IsAuthenticated
 
-class OfertaList(APIView):
+class ofertaList(APIView):
     """
     Lista todas las ofertas, o crea una nueva oferta.
     """
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, format=None):
         # Get all data
         ofertas = OfertaLaboral.objects.all()
@@ -85,10 +88,12 @@ class OfertaList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class OfertaDetail(APIView):
+class ofertaDetail(APIView):
     """
-    Retrieve, update or delete a snippet instance.
+    Retrieve, update or delete a oferta instance.
     """
+    permission_classes = (IsAuthenticated,)
+
     def get_object(self, pk):
         try:
             return OfertaLaboral.objects.get(pk=pk)
