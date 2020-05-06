@@ -89,9 +89,11 @@ class Persona(models.Model):
     familiares = models.TextField(null=True)
     ha_trabajado = models.TextField(null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ultima_modificacion = models.DateTimeField(auto_now=True)
 
     class Meta:
         permissions = ( 
+            ( "api_listar_personas", "Listar curriculums" ),
             ( "api_editar_persona", "Editar datos personales" ),
         )
 

@@ -10,6 +10,7 @@ from api.views.empleo.empleo import empleoList, empleoDetail
 from api.views.user.user import userDetail
 from api.views.auth.permissions import get_permissions
 from api.views.auth.captcha import captcha
+from api.views.persona.persona import personaDetail, personaList
 
 urlpatterns = [
     # URL para registro de usuarios
@@ -41,4 +42,8 @@ urlpatterns = [
 
     # URL para usuarios
     path('user/<int:pk>', userDetail.as_view()),
+
+    # URL para persona
+    path('persona', personaList.as_view()),
+    path('persona/<int:pk>', personaDetail.as_view()),
 ]
