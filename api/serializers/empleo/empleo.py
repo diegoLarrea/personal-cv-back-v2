@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from api.models import OfertaLaboral
+from api.models import Empleo
 
-class OfertaLaboralSerializer(serializers.ModelSerializer):
+class EmpleoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OfertaLaboral
+        model = Empleo
         # depth = 1
         fields = ["id", "oportunidad", "descripcion", "requisitos", "tipo", "vigencia", "localidad", "area", 
         "dominio", "nivel", "fecha_creacion", "fecha_modificacion", "usuario_creacion", "usuario_modificacion"] 

@@ -8,7 +8,7 @@ from api.models import Persona
 import json
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
-class UserList(APIView):
+class userList(APIView):
     
     def get(self, request, format=None):
         
@@ -16,7 +16,7 @@ class UserList(APIView):
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
 
-class UserDetail(APIView):
+class userDetail(APIView):
     
     def get_object(self, pk):
         try:

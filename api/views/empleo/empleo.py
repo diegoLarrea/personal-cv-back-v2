@@ -1,5 +1,5 @@
-from api.models import OfertaLaboral, Nivel, Dominio, Localidad, Area
-from api.serializers.ofertaLaboral.ofertaLaboralSerializer import OfertaLaboralSerializer 
+from api.models import Empleo, Nivel, Dominio, Localidad, Area
+from api.serializers.empleo.empleo import EmpleoSerializer 
 from api.serializers.ajustes.ajustes import NivelSerializer, LocalidadSerializer, DominioSerializer, AreaSerializer
 from django.http import Http404
 from rest_framework.views import APIView
@@ -8,16 +8,22 @@ from rest_framework import status
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
 from rest_framework.permissions import IsAuthenticated
+from api.helpers.check import check_permissions
 
-class ofertaList(APIView):
+
+class empleoList(APIView):
     """
     Lista todas las ofertas, o crea una nueva oferta.
     """
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
+
+        if not check_permissions(request.user, 'api.api_listar_empleos'):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
         # Get all data
-        ofertas = OfertaLaboral.objects.all()
+        ofertas = Empleo.objects.all()
         
         # Query Params
         page = request.GET.get('page', 1)
@@ -82,13 +88,13 @@ class ofertaList(APIView):
 
 
     def post(self, request, format=None):
-        serializer = OfertaLaboralSerializer(data=request.data)
+        serializer = EmpleoSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ofertaDetail(APIView):
+class empleoDetail(APIView):
     """
     Retrieve, update or delete a oferta instance.
     """
@@ -96,18 +102,18 @@ class ofertaDetail(APIView):
 
     def get_object(self, pk):
         try:
-            return OfertaLaboral.objects.get(pk=pk)
-        except OfertaLaboral.DoesNotExist:
+            return Empleo.objects.get(pk=pk)
+        except Empleo.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
         oferta = self.get_object(pk)
-        serializer = OfertaLaboralSerializer(oferta)
+        serializer = EmpleoSerializer(oferta)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         oferta = self.get_object(pk)
-        serializer = OfertaLaboralSerializer(oferta, data=request.data)
+        serializer = EmpleoSerializer(oferta, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

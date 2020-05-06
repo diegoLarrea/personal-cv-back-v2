@@ -5,17 +5,49 @@ from model_utils import Choices
 class Area(models.Model):
     nombre = models.CharField(max_length=100)
 
+    class Meta:
+        permissions = ( 
+            ( "api_listar_areas", "Listar areas" ),
+            ( "api_crear_area", "Agregar area" ),
+            ( "api_editar_area", "Editar area" ),
+            ( "api_eliminar_area", "Eliminar area" ),
+        )
+
 class Dominio(models.Model):
     nombre = models.CharField(max_length=100)
+    
+    class Meta:
+        permissions = ( 
+            ( "api_listar_dominios", "Listar dominios" ),
+            ( "api_crear_dominio", "Agregar dominio" ),
+            ( "api_editar_dominio", "Editar dominio" ),
+            ( "api_eliminar_dominio", "Eliminar dominio" ),
+        )
 
 class Nivel(models.Model):
     nombre = models.CharField(max_length=100)
+
+    class Meta:
+        permissions = ( 
+            ( "api_listar_niveles", "Listar niveles" ),
+            ( "api_crear_nivel", "Agregar nivel" ),
+            ( "api_editar_nivel", "Editar nivel" ),
+            ( "api_eliminar_nivel", "Eliminar nivel" ),
+        )
 
 class Localidad(models.Model):
     nombre = models.CharField(max_length=100)
     direccion = models.CharField(max_length=200)
 
-class OfertaLaboral(models.Model):
+    class Meta:
+        permissions = ( 
+            ( "api_listar_localidades", "Listar localidades" ),
+            ( "api_crear_localidad", "Agregar localidad" ),
+            ( "api_editar_localidad", "Editar localidad" ),
+            ( "api_eliminar_localidad", "Eliminar localidad" ),
+        )
+
+class Empleo(models.Model):
     oportunidad = models.CharField(max_length=200)
     descripcion = models.TextField()
     requisitos = models.TextField()
@@ -30,6 +62,14 @@ class OfertaLaboral(models.Model):
     fecha_modificacion = models.DateTimeField(null=True)
     usuario_creacion = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_add")
     usuario_modificacion = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="user_edit")
+
+    class Meta:
+        permissions = ( 
+            ( "api_listar_empleos", "Listar empleos" ),
+            ( "api_crear_empleo", "Agregar empleo" ),
+            ( "api_editar_empleo", "Editar empleo" ),
+            ( "api_eliminar_empleo", "Eliminar empleo" ),
+        )
 
 class Persona(models.Model):
     nombres = models.CharField(max_length=100)
@@ -49,3 +89,21 @@ class Persona(models.Model):
     familiares = models.TextField(null=True)
     ha_trabajado = models.TextField(null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        permissions = ( 
+            ( "api_editar_persona", "Editar datos personales" ),
+        )
+
+class Postulacion(models.Model):
+    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    empleo = models.ForeignKey(Empleo, on_delete=models.CASCADE)
+    fecha_postulacion = models.DateField()
+
+    class Meta:
+        permissions = ( 
+            ( "api_listar_postulaciones", "Listar postulaciones" ),
+            ( "api_crear_postulacion", "Agregar postulacion" ),
+            ( "api_editar_postulacion", "Editar postulacion" ),
+            ( "api_eliminar_postulacion", "Eliminar postulacion" ),
+        )
