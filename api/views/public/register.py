@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
-from api.serializers.user.user import UserSerializer
+from api.serializers.user.userSerializer import UserSerializer
 from api.models import Persona
 from django.contrib.auth.models import User, Group
 import json
@@ -29,8 +29,6 @@ def register(request):
     user.first_name = body_data.get("nombres")
     user.last_name = body_data.get("apellidos")    
     user.set_password(body_data.get('password'))
-    rol_postulante = Group.objects.get(name='Postulante')
-    user.groups.add(rol_postulante)
     user.save()
     
     persona = Persona.objects.create(nombres=body_data.get('nombres'),
