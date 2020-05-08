@@ -1,4 +1,4 @@
-from api.models import Persona 
+from api.models import Persona
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -28,3 +28,5 @@ class personaDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+

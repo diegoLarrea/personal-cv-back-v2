@@ -66,6 +66,7 @@ class Educacion(models.Model):
     desde = models.CharField(max_length=20)
     hasta = models.CharField(max_length=20, null=True)
     ultima_modificacion = models.DateTimeField(auto_now=True)
+    documento = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Idioma(models.Model):
