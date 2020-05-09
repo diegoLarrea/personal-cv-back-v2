@@ -9,6 +9,8 @@ from api.views.public.captcha import captcha
 from api.views.public.persona.persona import personaDetail
 from api.views.public.persona.educacion import educacionList, educacionDetail
 from api.views.public.persona.idioma import idiomaList, idiomaDetail
+from api.views.public.persona.experiencia import experienciaList, experienciaDetail
+from api.views.public.persona.referencia import referenciaList, referenciaDetail
 from api.views.public.usuario import getUsuario
 
 urlpatterns = [
@@ -35,4 +37,10 @@ urlpatterns = [
     # URL CRUD idioma
     path('public/idioma', idiomaList.as_view()),
     path('public/idioma/<int:pk>', idiomaDetail.as_view()),
+    # URL CRUD experiencia
+    path('public/experiencia', experienciaList.as_view()),
+    path('public/experiencia/<int:pk>', experienciaDetail.as_view()),
+    # URL CRUD referencia
+    path('public/referencia', referenciaList.as_view()),
+    path('public/referencia/<int:pk>', referenciaDetail.as_view()),
 ]
