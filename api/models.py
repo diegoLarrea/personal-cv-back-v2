@@ -32,6 +32,11 @@ class Empleo(models.Model):
     usuario_creacion = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_add")
     usuario_modificacion = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="user_edit")
 
+class Postulacion(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='postulaciones')
+    empleo = models.ForeignKey(Empleo, on_delete=models.CASCADE, related_name='postulantes')
+    fecha_postulacion = models.DateTimeField(auto_now_add=True)
+
 class Persona(models.Model):
     nombres = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
@@ -51,11 +56,6 @@ class Persona(models.Model):
     ha_trabajado = models.TextField(null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ultima_modificacion = models.DateTimeField(auto_now=True)
-
-class Postulacion(models.Model):
-    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
-    empleo = models.ForeignKey(Empleo, on_delete=models.CASCADE)
-    fecha_postulacion = models.DateField()
 
 class Educacion(models.Model):
     institucion = models.CharField(max_length=200)

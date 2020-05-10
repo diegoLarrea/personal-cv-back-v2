@@ -4,13 +4,14 @@ from rest_framework import routers
 # imports para public
 from rest_framework_simplejwt import views as jwt_views
 from api.views.public.register import register
-from api.views.public.empleo import empleosList, obtenerFiltros
+from api.views.public.empleo import empleosList, obtenerFiltros, getEmpleoById
 from api.views.public.captcha import captcha
 from api.views.public.persona.persona import personaDetail
 from api.views.public.persona.educacion import educacionList, educacionDetail
 from api.views.public.persona.idioma import idiomaList, idiomaDetail
 from api.views.public.persona.experiencia import experienciaList, experienciaDetail
 from api.views.public.persona.referencia import referenciaList, referenciaDetail
+from api.views.public.postulacion import postulacionList, postulacionDetail
 from api.views.public.usuario import getUsuario
 
 urlpatterns = [
@@ -28,6 +29,8 @@ urlpatterns = [
     # URL para obtener empleos
     path('public/empleos', empleosList),
     # URL para obtener empleos
+    path('public/empleos/<int:pk>', getEmpleoById),
+    # URL para obtener empleos
     path('public/empleos/obtener-filtros', obtenerFiltros),
     # URL para obtener y actualizar persona
     path('public/persona/<int:pk>', personaDetail.as_view()),
@@ -43,4 +46,7 @@ urlpatterns = [
     # URL CRUD referencia
     path('public/referencia', referenciaList.as_view()),
     path('public/referencia/<int:pk>', referenciaDetail.as_view()),
+    # URL CRUD postulaciones
+    path('public/postulacion', postulacionList.as_view()),
+    path('public/postulacion/<int:pk>', postulacionDetail.as_view()),
 ]

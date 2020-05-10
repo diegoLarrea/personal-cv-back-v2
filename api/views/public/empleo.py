@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from django.core.paginator import Paginator
 import json
 
-from api.models import Empleo, Localidad, Area
+from api.models import Empleo, Localidad, Area, Postulacion
 from api.serializers.empleo.empleoSerializer import EmpleoSerializer
 from api.serializers.ajustes.ajustesSerializers import LocalidadSerializer, AreaSerializer
 
@@ -69,4 +69,17 @@ def obtenerFiltros(request):
         "localidades": LocalidadSerializer(localidades, many=True).data
     }
 
+    return Response(response)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getEmpleoById(request, pk):
+    empleo = Empleo.objects.get(pk=pk)
+    serializer = EmpleoSerializer(empleo)
+    disabled = Postulacion.objects.filter(user=request.user, empleo=pk).exists()
+    response = {
+        "empleo": serializer.data,
+        "disabled": disabled 
+    }
     return Response(response)
