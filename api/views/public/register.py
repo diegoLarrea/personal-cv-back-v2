@@ -34,6 +34,7 @@ def register(request):
     persona = Persona.objects.create(nombres=body_data.get('nombres'),
                                     apellidos=body_data.get('apellidos'),
                                     documento=body_data.get('documento'),
+                                    email = body_data.get('email'),
                                     user=user)
     persona.save()
 

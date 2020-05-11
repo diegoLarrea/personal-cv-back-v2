@@ -14,6 +14,9 @@ from api.views.public.persona.referencia import referenciaList, referenciaDetail
 from api.views.public.postulacion import postulacionList, postulacionDetail
 from api.views.public.usuario import getUsuario
 
+# imports para admin
+from api.views.admin.user.user import userList
+
 urlpatterns = [
 
     ## URL publicas ##
@@ -49,4 +52,7 @@ urlpatterns = [
     # URL CRUD postulaciones
     path('public/postulacion', postulacionList.as_view()),
     path('public/postulacion/<int:pk>', postulacionDetail.as_view()),
+
+    ## URL admin ##
+    path('admin/usuarios', userList.as_view()),
 ]

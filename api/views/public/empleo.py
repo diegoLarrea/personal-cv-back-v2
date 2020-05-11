@@ -43,7 +43,7 @@ def empleosList(request):
             ofertas = ofertas.filter(localidad__in=localidades_ids)        
 
     if oportunidad is not None:
-        ofertas = ofertas.filter(oportunidad__contains=oportunidad)
+        ofertas = ofertas.filter(oportunidad__icontains=oportunidad)
 
     ofertas = ofertas.order_by("%s%s" % (orderDir, orderBy))
 
