@@ -27,12 +27,38 @@ class userList(APIView):
         search = request.GET.get("search", None)
         
         if search is not None:
-            users = users.filter(Q(nombres__icontains=search) |
-                                 Q(apellidos__icontains=search) |
-                                 Q(email__icontains=search) |
-                                 Q(documento__icontains=search) |
-                                 Q(fecha_nacimiento__icontains=search))
 
+            search = json.loads(search)
+            
+            nombres = search.get("nombres") 
+            apellidos = search.get("apellidos")
+            documento = search.get("documento")
+            email = search.get("email") 
+            pais = search.get("pais")
+            ciudad = search.get("ciudad")
+            fecha_nacimiento = search.get("fecha_nacimiento")
+
+            if nombres is not None:
+                users =  users.filter(nombres__icontains= nombres)
+
+            if apellidos is not None:
+                users =  users.filter(apellidos__icontains= apellidos)
+        
+            if documento is not None:
+                users =  users.filter(documento__icontains= documento)
+
+            if email is not None:
+                users =  users.filter(email__icontains= email)
+
+            if pais is not None:
+                users = users.filter(pais_nacimiento__icontains= pais)
+
+            if ciudad is not None:
+                users = users.filter(ciudad_residencia__icontains = ciudad)
+
+            if fecha_nacimiento is not None:
+                users = users.filter(fecha_nacimiento__icontains = fecha_nacimiento)
+            
         if orderDir == "ASC":
             orderDir=""
         else:
