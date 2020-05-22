@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Nivel, Localidad, Area, Dominio
+from api.models import Nivel, Localidad, Area, Dominio, Tag
 
 class NivelSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,3 +20,8 @@ class DominioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dominio
         fields = ["id", "nombre"] 
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ["id", "nombre", "color"] 

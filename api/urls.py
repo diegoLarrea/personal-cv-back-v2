@@ -16,6 +16,11 @@ from api.views.public.usuario import getUsuario
 
 # imports para admin
 from api.views.admin.user.user import userList
+from api.views.admin.ajustes.areas import areaList,areaDetail
+from api.views.admin.ajustes.niveles import nivelList,nivelDetail
+from api.views.admin.ajustes.dominios import dominioList,dominioDetail
+from api.views.admin.ajustes.localidades import localidadList,localidadDetail
+from api.views.admin.ajustes.tags import tagList,tagDetail
 
 urlpatterns = [
 
@@ -57,4 +62,19 @@ urlpatterns = [
 
     ## URL admin ##
     path('admin/usuarios', userList.as_view()),
+    # URL CRUD area
+    path('admin/area', areaList.as_view()),
+    path('admin/area/<int:pk>', areaDetail.as_view()),
+    # URL CRUD nivel
+    path('admin/nivel', nivelList.as_view()),
+    path('admin/nivel/<int:pk>', nivelDetail.as_view()),
+    # URL CRUD dominio
+    path('admin/dominio', dominioList.as_view()),
+    path('admin/dominio/<int:pk>', dominioDetail.as_view()),
+    # URL CRUD localidades
+    path('admin/localidad', localidadList.as_view()),
+    path('admin/localidad/<int:pk>', localidadDetail.as_view()),
+    # URL CRUD tags
+    path('admin/tag', tagList.as_view()),
+    path('admin/tag/<int:pk>', tagDetail.as_view()),
 ]

@@ -16,6 +16,11 @@ class Localidad(models.Model):
     nombre = models.CharField(max_length=100)
     direccion = models.CharField(max_length=200)
 
+class Tag(models.Model):
+    nombre = models.CharField(max_length=100)
+    color = models.CharField(max_length=10)
+    user_tag = models.ManyToManyField(User, related_name="tags")
+
 class Empleo(models.Model):
     oportunidad = models.CharField(max_length=200)
     descripcion = models.TextField()
@@ -56,6 +61,8 @@ class Persona(models.Model):
     ha_trabajado = models.TextField(null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ultima_modificacion = models.DateTimeField(auto_now=True)
+    estados_choices = Choices("Ingresado", "Visto", "Seleccionado", "Contratado")
+    estado = models.CharField(choices=estados_choices, max_length=20, default="Ingresado")
 
 class Educacion(models.Model):
     institucion = models.CharField(max_length=200)

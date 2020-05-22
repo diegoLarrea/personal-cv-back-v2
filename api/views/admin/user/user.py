@@ -14,7 +14,7 @@ from django.db.models import Q
 
 class userList(APIView):
 
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
 
