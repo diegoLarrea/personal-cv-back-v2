@@ -11,3 +11,9 @@ class PostulacionDepthSerializer(serializers.ModelSerializer):
         model = Postulacion
         depth = 1
         fields = ('id','fecha_postulacion', 'empleo')
+
+class PostulantesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Postulacion
+        depth = 1
+        fields = ('id','fecha_postulacion', 'user')

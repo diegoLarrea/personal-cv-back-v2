@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from django.core.paginator import Paginator
 import json
+from django.db.models import Q
 
 from api.models import Empleo, Localidad, Area, Postulacion
 from api.serializers.empleo.empleoSerializer import EmpleoSerializer
@@ -21,7 +22,7 @@ def empleosList(request):
     itemsPP = request.GET.get('cantidad', 10)
     orderBy = request.GET.get('orderBy', "fecha_creacion")
     orderDir = request.GET.get('orderDir', "-")
-    oportunidad = request.GET.get("oportunidad", None)
+    search = request.GET.get("oportunidad", None)
     filters = request.GET.get('filters', None)
 
     if filters is not None:
@@ -42,8 +43,8 @@ def empleosList(request):
                 localidades_ids.append(localidad["id"])
             ofertas = ofertas.filter(localidad__in=localidades_ids)        
 
-    if oportunidad is not None:
-        ofertas = ofertas.filter(oportunidad__icontains=oportunidad)
+    if search is not None:
+        ofertas = ofertas.filter(Q(codigo=search) | Q(oportunidad__icontains=search))
 
     ofertas = ofertas.order_by("%s%s" % (orderDir, orderBy))
 

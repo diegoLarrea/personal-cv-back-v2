@@ -21,6 +21,7 @@ from api.views.admin.ajustes.niveles import nivelList,nivelDetail
 from api.views.admin.ajustes.dominios import dominioList,dominioDetail
 from api.views.admin.ajustes.localidades import localidadList,localidadDetail
 from api.views.admin.ajustes.tags import tagList,tagDetail
+from api.views.admin.empleo import empleoList,empleoDetail
 
 urlpatterns = [
 
@@ -77,4 +78,7 @@ urlpatterns = [
     # URL CRUD tags
     path('admin/tag', tagList.as_view()),
     path('admin/tag/<int:pk>', tagDetail.as_view()),
+    # URL CRUD empleo
+    path('admin/empleo', empleoList.as_view()),
+    path('admin/empleo/<int:pk>', empleoDetail.as_view()),
 ]
