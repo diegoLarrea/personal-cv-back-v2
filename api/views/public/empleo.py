@@ -7,9 +7,9 @@ from django.core.paginator import Paginator
 import json
 from django.db.models import Q
 
-from api.models import Empleo, Localidad, Area, Postulacion
+from api.models import Empleo, Localidad, Area, Postulacion, Nivel, Dominio
 from api.serializers.empleo.empleoSerializer import EmpleoSerializer
-from api.serializers.ajustes.ajustesSerializers import LocalidadSerializer, AreaSerializer
+from api.serializers.ajustes.ajustesSerializers import LocalidadSerializer, AreaSerializer, NivelSerializer, DominioSerializer
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -64,10 +64,14 @@ def empleosList(request):
 def obtenerFiltros(request):
     areas = Area.objects.all()
     localidades = Localidad.objects.all()
+    niveles = Nivel.objects.all()
+    dominios = Dominio.objects.all()
 
     response = {
         "areas": AreaSerializer(areas, many=True).data,
-        "localidades": LocalidadSerializer(localidades, many=True).data
+        "localidades": LocalidadSerializer(localidades, many=True).data,
+        "niveles": NivelSerializer(niveles, many=True).data,
+        "dominios": DominioSerializer(dominios, many=True).data
     }
 
     return Response(response)

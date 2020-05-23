@@ -27,7 +27,7 @@ class Empleo(models.Model):
     requisitos = models.TextField()
     tipo_choices = Choices("Interna", "Externa")
     tipo = models.CharField(choices=tipo_choices, default=tipo_choices.Interna, max_length=7)
-    vigencia = models.DateTimeField(null=False)
+    vigencia = models.DateField(null=False)
     codigo = models.CharField(max_length=20, null=True)
     localidad = models.ForeignKey(Localidad, on_delete=models.CASCADE)
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
