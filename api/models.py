@@ -34,7 +34,7 @@ class Empleo(models.Model):
     dominio = models.ForeignKey(Dominio, on_delete=models.CASCADE)
     nivel = models.ForeignKey(Nivel, on_delete=models.CASCADE)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    fecha_modificacion = models.DateTimeField(null=True)
+    fecha_modificacion = models.DateTimeField(auto_now=True)
     usuario_creacion = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_add")
     usuario_modificacion = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="user_edit")
 
