@@ -6,10 +6,10 @@ class EmpleoSerializer(serializers.ModelSerializer):
         model = Empleo
         depth = 2
         fields = ["id", "oportunidad", "descripcion", "requisitos", "tipo", "vigencia", "localidad", "area", 
-        "dominio", "nivel", "fecha_creacion", "fecha_modificacion", "usuario_creacion", "usuario_modificacion", "codigo", "postulantes"] 
+        "dominio", "nivel", "fecha_creacion", "fecha_modificacion", "usuario_creacion", "usuario_modificacion", "codigo", "postulantes", "activo"] 
 
 class EmpleoAdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Empleo
         fields = ["id", "oportunidad", "descripcion", "requisitos", "tipo", "vigencia", "localidad", "area", 
-        "dominio", "nivel", "fecha_creacion", "fecha_modificacion", "usuario_creacion", "usuario_modificacion", "codigo"] 
+        "dominio", "nivel", "fecha_creacion", "fecha_modificacion", "usuario_creacion", "usuario_modificacion", "codigo", "activo"] 

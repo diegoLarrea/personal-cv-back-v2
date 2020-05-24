@@ -21,7 +21,7 @@ from api.views.admin.ajustes.niveles import nivelList,nivelDetail
 from api.views.admin.ajustes.dominios import dominioList,dominioDetail
 from api.views.admin.ajustes.localidades import localidadList,localidadDetail
 from api.views.admin.ajustes.tags import tagList,tagDetail
-from api.views.admin.empleo import empleoList,empleoDetail
+from api.views.admin.empleo import empleoList,empleoDetail, desactivarEmpleo, activarEmpleo
 
 urlpatterns = [
 
@@ -81,4 +81,6 @@ urlpatterns = [
     # URL CRUD empleo
     path('admin/empleo', empleoList.as_view()),
     path('admin/empleo/<int:pk>', empleoDetail.as_view()),
+    path('admin/empleo/<int:pk>/desactivar', desactivarEmpleo),
+    path('admin/empleo/<int:pk>/activar', activarEmpleo),
 ]

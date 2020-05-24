@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from hashids import Hashids
 from django.db.models import Q
 import json
+from rest_framework.decorators import api_view, permission_classes
 
 class empleoList(APIView):
     permission_classes = (IsAuthenticated,)
@@ -30,6 +31,7 @@ class empleoList(APIView):
             areas_json = filters.get("areas", None)
             localidades_json = filters.get("localidades", None)
             search = filters.get("search", None)
+            activo = filters.get("activo", None)
 
             areas_ids = []
             localidades_ids = []
@@ -46,6 +48,9 @@ class empleoList(APIView):
 
             if search is not None:
                 ofertas = ofertas.filter(Q(codigo=search) | Q(oportunidad__icontains=search))
+
+            if activo:
+                ofertas = ofertas.filter(activo=activo)
 
         if orderDir == "ASC":
             orderDir=""
@@ -80,6 +85,8 @@ class empleoList(APIView):
 
 class empleoDetail(APIView):
    
+    permission_classes = (IsAuthenticated,)
+
     def get_object(self, pk):
         try:
             return Empleo.objects.get(pk=pk)
@@ -104,3 +111,37 @@ class empleoDetail(APIView):
         empleo.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class empleoDesactivar(APIView):
+
+    # permission_classes = (IsAuthenticated,)
+    
+    def get_object(self, pk):
+        try:
+            return Empleo.objects.get(pk=pk)
+        except Empleo.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        empleo = self.get_object(pk)
+        empleo.activo = False
+        empleo.save()
+        empleo.postulantes.all().delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def desactivarEmpleo(request, pk):
+    empleo = Empleo.objects.get(pk=pk)
+    empleo.activo = False
+    empleo.save()
+    empleo.postulantes.all().delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def activarEmpleo(request, pk):
+    empleo = Empleo.objects.get(pk=pk)
+    empleo.activo = True
+    empleo.save()
+    return Response(status=status.HTTP_200_OK)    

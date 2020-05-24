@@ -15,7 +15,7 @@ from api.serializers.ajustes.ajustesSerializers import LocalidadSerializer, Area
 @permission_classes([IsAuthenticated])
 def empleosList(request):
     
-    ofertas = Empleo.objects.all()
+    ofertas = Empleo.objects.filter(activo=True)
 
     # Query Params
     page = request.GET.get('page', 1)
